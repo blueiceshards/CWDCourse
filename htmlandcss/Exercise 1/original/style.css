@@ -1,0 +1,128 @@
+* {
+  text-align: right;
+}
+
+body {
+  background-image: url(backgroundimage.jpeg);
+  background-size: cover;
+}
+
+h2, p {
+  color: #AA4139;
+  text-align: center;
+  border: 5px dashed rgba(255, 176, 170, 0.3);
+  cursor: pointer;
+}
+
+p {
+  color: pink;
+}
+
+p {
+  color: green;
+}
+
+img {
+  float:right;
+}
+
+footer {
+  clear: both;
+  text-align: center;
+}
+
+li {
+  list-style: none;
+  display: inline-block;
+}
+.webtext{
+  border: 5px dashed green;
+}
+
+.active{
+  color:red;
+}
+
+#div1 {
+  background: rgba(0,0,255,0.2);
+}
+#div2 {
+  background: rgba(255,0,0,0.2);
+
+}
+
+
+
+/*CSS 
+Selector {
+  Property: value;
+
+CSS stands for cascading style sheets. it always takes the selector that is at the end. So it takes the last input that it receives from a specific selector. 
+
+You can create multiple stylesheets and link different html pages to different stylesheets. 
+
+You can technically add style tags to html and then you can type CSS. However, creating separate style sheets is good for separation of concerns. and prevents html documents from being excessively long.
+
+CSS tricks website
+
+body h2 p (trickle from general to specific)
+
+  display: 
+  block; [or]
+  inline-block;
+
+colors: paletton.com
+website gives you the colors and what complements that color. you can change criterias and see what color combnatios work.
+
+hex: #AA4139
+or rgba 
+but be consistent
+rgba if you need the alpha (transparency)
+
+or you can
+
+h2, p { ... }
+
+CSS at the most basic level indicates that the order of CSS rules matter. CSS will read the last line. 
+
+selectors:
+.class class is a good way to select a group of elements and ensure they all have the same style. 
+#id id is similar to classss but you can use the same id only once.
+* symbolizes all elements 
+element
+element, element [want 2 elements to have same properties]
+element element [e.g. h2 p, means you want to sleect all ps in h2]
+element > element [e.g. h2 > p, means you want to slelect all ps with parent h2. i.e. direct parent is h2, and not divs etc. ]
+element + element [ e.g. h2+p, sleect any p element exactly after h2 elements. in the html.]
+:hover [e.g. p:hover {...} when you hover mouse, the styles are applied]
+:last-child
+:first-child [first child of the element/id]
+!important (e.g. color: pink !important) overrides any future ps. breaks the rules of css, do not recommend. 
+
+What selectors win out in the cascade depends on:
+- Specificity
+- Importance )!important)
+- Source Order (in the html code. will use the later code cos css)
+
+CSS Specificity Calculator
+
+Text and Font lecture for text decoration
+
+You can either include a font file or use google fonts to ensure that everyone sees the same font.
+
+link font after link href font in html page
+
+[will make website a bit slower]
+
+float: use with images to let the image inline with text;
+
+img {
+  flat:right;
+}
+
+footer {
+  clear: both;
+  text-align: center;
+}
+
+}*/

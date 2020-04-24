@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register!</title>
+</head>
+<body>
+  <form>
+    First Name: <input type="text" name="firstname"><br>
+    Last Name: <input type="text" name="lastname"><br>
+    Email: <input type="email" name="email" required><br>
+    Password: <input type="password" name="password" min="5"><br>
+    Birthday: <input type="date" name="birthday"><br>
+    Gender: <br>
+    <input type="radio" name="gender" value="male">Male<br>
+    <input type="radio" name="gender" value="female">Female<br>
+    <input type="radio" name="gender" value="other">Other<br>
+    Pets:<br>
+    <input type="checkbox" name="cat"> Cats<br>
+    <input type="checkbox" name="dog"> Dogs<br>
+    Cars:<br>
+    <select name="cars">
+      <option value="Volvo" name="volvo">Volvo</option>
+      <option value="Audi" name="audi">Audi</option>
+    </select><br>
+    <input type="submit" value = "Register!">
+    <input type="reset">
+  </form>
+</body>
+</html>
+
+<!--  
+HTML5: 
+<form method="GET"> attach form information to url and send it to server (query strings)
+<form method="POST"> attach form information to the body of the request. 
+POST may be better than GET so that you don't show the password. 
+<form method="GET" action="action.php">
+
+Query strings starts with Questio mark = we have a bunch of data for you. 
+Name = Property, Value = [input]
+
+url:
+?
+firstname=Fake
++&lastname=Female
+&email=fake%40gmail.com
+&password=1234
+&birthday=2020-04-16
+&gender=female
+&cat=on
+&dog=on
+&cars=Volvo
+
+div and span tags are used to divide content. 
+Div- wraps form, useful for CSS. Because we can use it to divide the content and add styles to each section. 
+Span: inline, to add style to only one line. 
+
+HTML vs HTML5
+
+HTML5 is backwards compatible. 
+Also have other features (supports other devices)
+Semantic elements - Make websites more descriptive to define different parts of a webpage, e.g. 
+<header></header>
+<nav></nav>
+<footer></footer>
+
+
+
+
+-->
