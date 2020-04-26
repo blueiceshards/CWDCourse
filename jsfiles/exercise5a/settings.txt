@@ -1,0 +1,21 @@
+json settings
+
+{
+    "workbench.colorTheme": "Monokai",
+    "python.dataScience.sendSelectionToInteractiveWindow": false,
+    "python.pythonPath": "/home/maria/anaconda3/bin/python",
+    "python.linting.flake8Enabled": true,
+    "git.suggestSmartCommit": false,
+    "launch": {
+        
+
+    
+    }
+    
+    "editor.tokenColorCustomizations": {
+        "[Monokai]": {
+            "comments": "#E6DB74"
+        }
+        
+    }
+}
