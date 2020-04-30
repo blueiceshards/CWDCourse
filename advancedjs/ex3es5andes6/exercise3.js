@@ -103,4 +103,4 @@ const whereAmI = (username, location) => {
     }
 }
 
-console.log(whereAmI());
+console.log(whereAmI(1,3));
