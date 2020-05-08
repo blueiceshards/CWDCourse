@@ -5,6 +5,11 @@ fetch('https://swapi.co/api/starships/9/')
   .then(response => response.json())
   .then(console.log)
 
+async function fetchStarships() {
+  const response = await fetch('https://jsonplaceholder.typicode.com/users');
+  const data = await response.json();
+  console.log(data);
+}
 
 // #2) ADVANCED: Update the function below from the video to also have
 // async await for this line: fetch(url).then(resp => resp.json())
@@ -17,17 +22,39 @@ const urls = [
 ]
 
 const getData = async function() {
-  const [ users, posts, albums ] = await Promise.all(urls.map(url =>
-      fetch(url).then(resp => resp.json())
-  ));
+  
+  const [ users, posts, albums ] = await Promise.all(urls.map(async function (url) {
+    const resp = await fetch(url);
+    const data = await resp.json();
+    return data;
+  }));
+
   console.log('users', users);
-  console.log('posta', posts);
+  console.log('posts', posts);
   console.log('albums', albums);
 }
 
+// the key is instead of urls.map(url => fetch(url), you need to do urls.map(async function(url) {...return}).
+
 // #3)Add a try catch block to the #2 solution in order to catch any errors. // Now, use the given array containing an invalid url, so you console.log  //your error with 'oooooops'.
+
 const urls = [
   'https://jsonplaceholder.typicode.com/users',
   'https://jsonplaceholdeTYPO.typicode.com/posts',
   'https://jsonplaceholder.typicode.com/albums'
 ]
+
+const getData = async function() {
+  try {
+    const [ users, posts, albums ] = await Promise.all(urls.map(async function (url) { //no arrow
+      const response = await fetch(url);
+      return response.json();
+    }));
+
+    console.log('users', users);
+    console.log('posts', posts);
+    console.log('albums', albums);
+  } catch (err) {
+    console.log('ooooops', err);
+  }
+}
