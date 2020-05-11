@@ -24,23 +24,27 @@ const particlesOptions = {
   }
 }
 
+// CREATE AN INITIAL STATE so that when another user logs in, he won't see the previous guy's images/credentials
+
+const initialState = {
+  input: '',
+  imageUrl: '',
+  box: {},
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0, 
+    joined: ''
+  }
+}
+
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      input: '',
-      imageUrl: '',
-      box: {},
-      route: 'signin',
-      isSignedIn: false,
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: 0, 
-        joined: ''
-      }
-    }
+    this.state = initialState;
   }
 
   loadUser = (data) => {
@@ -74,7 +78,7 @@ class App extends Component {
   }
 
   displayFaceBox = (box) => {
-    console.log(box);
+    //console.log(box);
     this.setState({ box: box });
   }
 
@@ -90,7 +94,7 @@ class App extends Component {
         this.state.input)
       .then(response => {
         if (response) {
-          fetch('http://localhost:3001/image', {
+          fetch('http://localhost:3001/image', { // should always have a catch for every fetch to help with error handling. 
             method: 'put',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
@@ -109,7 +113,7 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState({isSignedIn: false})
+      this.setState(initialState)
     } else if (route === 'home') {
       this.setState({isSignedIn: true})
     }
@@ -178,4 +182,8 @@ render() {
       }
     </div>
   );
-} */
+} 
+
+// CODE REVIEW -> relook at app and look for things to improve. 
+
+*/

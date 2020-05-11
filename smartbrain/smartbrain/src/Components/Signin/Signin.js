@@ -94,4 +94,7 @@ export default Signin;
 /*
 <input onClick={onRouteChange('home')}  // this will run function when it gets rendered, not when onClick happens
 <input onClick={() => onRouteChange('home')}   // this will run whenever onClick happens, and onClick will call this function. this is a function that will get called, () => onRouteChange('home') is defining the function.
+
+Cleaning up -> we could have a shared component for signin and register so that we don't have a lot of duplicate code. 
+
 */
