@@ -35,7 +35,7 @@ class Register extends React.Component {
         })
             .then(response => response.json())
             .then(user => {
-                if (user) {
+                if (user.id) { // need to have user.id because if "user", "incorrect form response" will be user.
                     this.props.loadUser(user); //build in app.js comp cos whole app needs this.
                     this.props.onRouteChange('home');
                 }
@@ -97,3 +97,7 @@ class Register extends React.Component {
 export default Register;
 
 // form: automatically if there is a submit i.e. onsubmit, will automatcillay try to send those forms. will get some error: Form submission canceled because the form is not connected. but we should do Div because we will send forms through JSON instead of through HTML forms to allow for full customization with JSON.
+
+// VALIDATION is very important. right now, we can submit a blank register form and still log in (database will reflect a blank user). validation is very important. when you communiate between front end and back end, there are a few layers of security. first, the front end will do its own validation. e.g. in the sign in or register page, within our front end react app, we can check that (register has an onsubmit button) onsubmit will check that name is not empty, email has proper email format, and password has some sort of validation (greater than 6 characters). the front end will send that validated information to the backend.
+
+// important thing to make sure with servers => that the servers will never trust anything received from the front end. server should do its own validation to check email, name and password, and make sure they are values that it wants to transfer and transact into the database. one way to do this: see handleRegister code in smartbrainapi. 

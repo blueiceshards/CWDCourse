@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
 import Navigation from './Components/Navigation/Navigation';
 import Signin from './Components/Signin/Signin';
 import Register from './Components/Register/Register';
@@ -10,7 +9,7 @@ import FaceRecognition from './Components/FaceRecognition/FaceRecognition';
 import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
 import './App.css';
 
-const app = new Clarifai.App({ apiKey: 'e96b30b256814ebb9b01bc9b7bf2c256' });
+// We need to move our Clarifai key to our backend because if it's on our front end, people can access the keys from console.
 
 const particlesOptions = {
   particles: {
@@ -88,26 +87,30 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
-    app.models
-      .predict(
-        Clarifai.FACE_DETECT_MODEL,
-        this.state.input)
-      .then(response => {
-        if (response) {
-          fetch('http://localhost:3001/image', { // should always have a catch for every fetch to help with error handling. 
-            method: 'put',
-            headers: {'Content-type': 'application/json'},
-            body: JSON.stringify({
-              id: this.state.user.id,
-            })
-          })
-          .then(response => response.json())
-          .then(count => {
-            this.setState(Object.assign(this.state.user, { entries: count})) // should not do this.setState(User) becase you don't want to change the whole users object, just want to modify properties of unchanged objects, so use objects.assign.
-          })
-        } 
-        this.displayFaceBox(this.calculateFaceLocation(response))
+      fetch('http://localhost:3001/imageurl', {
+        method: 'post',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({
+        input: this.state.input
       })
+    })
+    .then(response => response.json())
+    .then(response => {
+      if (response) {
+        fetch('http://localhost:3001/image', { // should always have a catch for every fetch to help with error handling. 
+          method: 'put',
+          headers: {'Content-type': 'application/json'},
+          body: JSON.stringify({
+            id: this.state.user.id,
+          })
+        })
+        .then(response => response.json())
+        .then(count => {
+          this.setState(Object.assign(this.state.user, { entries: count})) // should not do this.setState(User) becase you don't want to change the whole users object, just want to modify properties of unchanged objects, so use objects.assign.
+        })
+      } 
+      this.displayFaceBox(this.calculateFaceLocation(response))
+    })
       .catch(err => console.log(err));
   }
 
