@@ -1,0 +1,136 @@
+psql 'test'
+
+test=# CREATE TABLE users (name text, age smallint, birthday date);
+CREATE TABLE
+
+test=# \d
+List of relations
+
+\q 
+Exits and goes back to terminal
+
+test=# INSERT INTO users (name, age, birthday) VALUES ('Andrei', 31, '1930-01-25');
+INSERT 0 1
+
+test=# SELECT name, age, birthday FROM users;
+displays table info
+
+test=# SELECT * FROM users;
+
+[note: is case insenstiive]
+
+test=# ALTER TABLE table_name ADD column datatype;
+test=# ALTER TABLE users ADD score smallint; 
+
+test=# UPDATE users SET score = 50 WHERE name='Andrei'; 
+test=# UPDATE users SET score = 100 WHERE name='John' AND name='Sally';
+test=# UPDATE users SET score = 100 WHERE name='John' OR name='Sally';
+
+
+Conditional selectors
+
+test=# SELECT * FROM users WHERE name LIKE 'A%'; // anything after A
+(To do this in the pgadmin4, Tools -> Query tool)
+
+// searches: case in the '' matters. 
+
+test=# SELECT * FROM users ORDER BY score DESC; 
+
+// If we had stored this as a variables, we would have to do a lot of looping to do these queries. SQL is really good at grabbing this information. it's really fast. even if the DB was hundreds of lines, SQL is really good at grabbing and upating information, ordering it, very powerful. Since 1960s, it's been the language of choice for DBs since it's so good. 
+
+// SQL can also have functions. the most common ones are below:
+ 
+test=# SELECT AVG(score) FROM users; 
+test=# SELECT SUM(age) FROM users;
+test=# SELECT COUNT(name) FROM users; // how many users in database
+
+Relational databases -> primary keys and foreign keys. tables are linked to one another by username, etc. we are now going to get started on how to connect different tables together. 
+
+CREATE TABLE login (
+    ID serial NOT NULL PRIMARY KEY,
+    secret VARCHAR (100) NOT NULL,
+    name text UNIQUE NOT NULL
+);
+
+// you can create above with GUI. 
+
+datatype serial: an auto incrementing integer value 
+ID: creating an ID for each login entry. 
+not null -> has to be a filled in property (e.g. when we created scores everything was null, not null -> this is not possible)
+PRIMARY KEY -> by saying ID is primary key, is saying that this is what I want to access when I am looking for things. primary key is always unique to each row. databases are really good when you set a primmary key to grab this information. primary keys are only one per table, ID, or email. now, we have a really fast way of selecting or grabbing information.
+
+secret value (hash) will not be greater than 100, and will always have a value (not null)
+
+unique -> if the name already exists, then we cannot insert into it. 
+
+let's enter some information into the table. 
+
+INSERT INTO login (secret, name) VALUES ('abc', 'Andrei');
+INSERT INTO login (secret, name) VALUES ('xyz', 'Sally');
+
+// Don't need to insert anything into the ID because that's done for us (serial automatically increments)
+
+if we repeat the above command, we get an error because non-unique name.
+
+now, when we INSERT INTO John's credentials, we get ID 4 because our command above ran and failed. but it doesn't matter because as long as IDs are unique, these are the primary keys => the one thing we make sure is unique at all times. 
+
+Now, we have Andrei, Sally and John living in both tables (login and users). We can now have Andrei Sally and John from login referencing users. if I want to grab Andrei secret (abc), I have a foreign key (name column in login) that references the primary key in users i.e. name (unique identifying values in the users table).
+
+we don't necessarily want one massive table - tons of rows and columns and all that info in one place, because it's not efficient -> a lot slower, hard to manage, and the bigger your companies grow, it's gouing to be touch. better structure, small tables only showing things they're concerned about -> separation of concerns. concerned with their minimal needed information and if something else is needed, we can join tables together to grab informatin. 
+
+test=# \d
+              List of relations
+ Schema |     Name     |   Type   |  Owner   
+--------+--------------+----------+----------
+ public | login        | table    | postgres
+ public | login_id_seq | sequence | postgres
+ public | users        | table    | maria
+(3 rows)
+
+login_id_seq => when you create a primary key, it creates another file that contains this primary key. the type is sequence. this is a file that most likely we won't ccess but postgres is going to make sure that because we set this primary key, it's goign to be really fast to grab data from the login table when we requested it. but if i want to get info from login and users, we need to g et sally's information, but I need her birthday, score, age, as well as her secret. by using join, we can do this. 
+
+test=# SELECT * FROM users JOIN login ON users.name = login.name;
+
+// how to know what matches with login? how is the database login goign to know to match the abc with andrei, xyz with sally and lol with john? the on keyword allows us to match up the name. in our case, it's the name - the primary key in the users table and the foreign key in the login table. 
+
+test=# SELECT * FROM users JOIN login ON users.name = login.name;
+  name  | age |  birthday  | score | id | secret |  name  
+--------+-----+------------+-------+----+--------+--------
+ Andrei |  31 | 1930-01-25 |    50 |  1 | abc    | Andrei
+ Sally  |  41 | 1930-01-04 |   100 |  2 | xyz    | Sally
+ John   |  45 | 1935-04-04 |   100 |  4 | lol    | John
+(3 rows)
+
+now, we have all these values, and they all matched, because we joined users.name and login.name. 
+
+with join comes great power -> we can have small little table based on our needs, and anytime something sepecific is needed, we can just join tables and we can do multiple tables with multiple joins to select information that we need. 
+
+deleting stuff. 
+
+test=# select * from users;
+  name  | age |  birthday  | score 
+--------+-----+------------+-------
+ Andrei |  31 | 1930-01-25 |    50
+ Sally  |  41 | 1930-01-04 |   100
+ John   |  45 | 1935-04-04 |   100
+ Amy    |  15 | 1935-04-04 |    88
+(4 rows)
+
+test=# DELETE FROM users WHERE name = 'Sally';
+DELETE 1
+test=# select * from users;
+  name  | age |  birthday  | score 
+--------+-----+------------+-------
+ Andrei |  31 | 1930-01-25 |    50
+ John   |  45 | 1935-04-04 |   100
+ Amy    |  15 | 1935-04-04 |    88
+(3 rows)
+
+To delete tables: 
+test=# DROP TABLE login; 
+DROP TABLE
+test=# DROP TABLE users; 
+DROP TABLE
+test=# \d
+Did not find any relations.
+

@@ -1,0 +1,11 @@
+Now, we have smartbrain front end (3000) and smartbrain server (3001) listening to requests. we now want to create a smartbrain database and have the server interacting with it through SQL, updating everything, and responding through express back to the front end. think of these 3 separate things as their own separate computers, that when we deploy, it's 3 different parts: 1. our server living on computer, 2. database living on a computer, and 3. our app in a separate computer as well. 
+
+But before we start to code anything, we have to design our database. 
+
+~desktop createdb 'smart-brain'.
+psql 'smart-brain'
+
+to get started, as we did when we created our API design for our server, we really want to think about how our database would look. we are using relational databases beacuse the instructor thinks that 2018 and moving forward, relational databases are really good. although dbs like mongodb are easy to get started with and are dynamic, don't need to think too much when starting off, relational dbs offer a really strong way to think about how your app should be structured and how everything anda ll the pieces come together. it's a powerful tool that the industry is shifting back to more and more.  whether you use PostgreSQL or MySQL or SequeLite, these databases are pretty much the same and super powerful and we are going to do the same thing with our app. we are not necc storing information like linkedin or facebook where everything is a document line. we have users interacting with each other, but for our app we have differnt hthings -> login information, type of information that they submitted, 
+
+we are going to create a users table and a login table, and have them connected perhaps through email.  
+
